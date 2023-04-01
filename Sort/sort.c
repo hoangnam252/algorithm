@@ -74,6 +74,71 @@ void selectionSort(int list[], int len)
     }
 }
 
+void merge(int list[], int left, int right, int mid)
+{
+    int num1 = 0, num2 = 0;
+    int i = 0, j = 0, k = 0;
+    num1 = mid - left + 1;
+    num2 = right - mid;
+
+    int L[num1], R[num2];
+
+    for(i = 0; i<num1;i++)
+    {
+        L[i] = list[left+i];
+    }
+
+    for(j = 0; j<num2;j++)
+    {
+        R[j] = list[mid+j+1];
+    }
+
+    i = 0, j = 0, k = left;
+    while(i < num1 && j < num2)
+    {
+        if(L[i] < R[j])
+        {
+            list[k] = L[i];
+            i++;
+        }
+        else
+        {
+            list[k] = R[j];
+            j++;
+        }
+        k++;
+    }
+
+    while(i < num1)
+    {
+        list[k] = L[i];
+        i++;
+        k++;
+    }
+
+    while(j < num2)
+    {
+        list[k] = R[j];
+        j++;
+        k++;
+    }
+}
+
+void mergeSort(int list[], int left, int right)
+{
+    int mid = 0;
+
+    if(left < right)
+    {
+        mid = left + (right - left)/2;
+
+        mergeSort(list, left, mid);
+        mergeSort(list, mid+1, right);
+
+        merge(list, left, right, mid);
+    }
+}
+
 int main()
 {
     int arr[5] = {7,5,9,1,10};
@@ -89,10 +154,11 @@ int main()
     //insertSort(arr, sizeof(arr)/sizeof(int));
     
     /*selectionSort*/
-    selectionSort(arr, sizeof(arr)/sizeof(int));
+    //selectionSort(arr, sizeof(arr)/sizeof(int));
 
+    /*mergeSort*/
+    mergeSort(arr,0, sizeof(arr)/sizeof(int) - 1);
     /*TESTING*/
-    
     for(i = 0; i < sizeof(arr)/sizeof(int); i++)
     {
         printf("%d ", arr[i]);
