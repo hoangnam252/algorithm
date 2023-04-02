@@ -139,6 +139,39 @@ void mergeSort(int list[], int left, int right)
     }
 }
 
+int partition(int list[], int low, int high)
+{
+    int pivot = 0, i = 0, j = 0;
+
+    pivot = list[high];
+    i = low - 1;
+
+    for(j = low; j < high; j++)
+    {
+        if(list[j] < pivot)
+        {
+            i++;
+            swap(&list[i], &list[j]);
+        }
+    }
+
+    swap(&list[i+1], &list[high]);
+
+    return (i+1);
+}
+
+void quickSort(int list[], int low, int high)
+{
+    int pivot = 0;
+    if(low < high)
+    {
+        pivot = partition(list, low, high);
+
+        quickSort(list, low, pivot-1);
+        quickSort(list, pivot+1, high);
+    }
+}
+
 int main()
 {
     int arr[5] = {7,5,9,1,10};
@@ -157,7 +190,11 @@ int main()
     //selectionSort(arr, sizeof(arr)/sizeof(int));
 
     /*mergeSort*/
-    mergeSort(arr,0, sizeof(arr)/sizeof(int) - 1);
+    //mergeSort(arr,0, sizeof(arr)/sizeof(int) - 1);
+
+    /*quickSort*/
+    quickSort(arr,0, sizeof(arr)/sizeof(int) - 1);
+
     /*TESTING*/
     for(i = 0; i < sizeof(arr)/sizeof(int); i++)
     {
