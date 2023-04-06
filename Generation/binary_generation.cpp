@@ -1,8 +1,9 @@
 #include <iostream>
+#include <vector>
 
 using namespace std;
 
-void print(int arr[], int length)
+void print(vector<int>& arr, int length)
 {
     int i = 0;
 
@@ -13,7 +14,8 @@ void print(int arr[], int length)
     cout<<endl;
 }
 
-void generateBinary(int arr[], int length, int index)
+/*Solution 1*/
+void generateBinary(vector<int>& arr, int length, int index)
 {
     if(index == length)
     {
@@ -27,6 +29,31 @@ void generateBinary(int arr[], int length, int index)
     generateBinary(arr, length, index+1);
 }
 
+/*Solution 2*/
+void generateBinary(vector<int>& arr, int length)
+{
+    int i = 0;
+
+    do
+    {
+        print(arr, length);
+        i = length - 1;
+
+        while(i>=0 && arr[i]==1)
+        {
+            i--;
+        }
+
+        if(i>=0)
+        {
+            arr[i] = 1;
+            if(arr.begin()+i < arr.end()-1)
+                fill(arr.begin()+i+1, arr.end(), 0);
+        }
+    }
+    while(i>=0);
+}
+
 int main()
 {
     int n;
@@ -34,9 +61,12 @@ int main()
     cout<<"Input length:";
     cin>>n;
 
-    int arr[n];
+    vector<int>arr(n);
 
-    generateBinary(arr, n, 0);
+    /*Solution 1*/
+    //generateBinary(arr, n, 0);
 
+    /*Solution 2*/
+    generateBinary(arr, n);
     return 0;
 }
